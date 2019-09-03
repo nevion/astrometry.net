@@ -11,7 +11,7 @@ py3 = (sys.version_info[0] >= 3)
 
 # Returns (rtn, out, err)
 def run_command(cmd, timeout=None, callback=None, stdindata=None,
-                tostring=True):
+                tostring=True, tee=False):
     """
     Run a command and return the text written to stdout and stderr, plus
     the return value.
@@ -51,11 +51,15 @@ def run_command(cmd, timeout=None, callback=None, stdindata=None,
             if len(outchunk) == 0:
                 outeof = True
             outdata.append(outchunk)
+            if tee:
+                sys.stdout.write(outchunk)
         if stderr in ready_readers:
             errchunk = os.read(stderr, block)
             if len(errchunk) == 0:
                 erreof = True
             errdata.append(errchunk)
+            if tee:
+                sys.stderr.write(errchunk)
         if callback:
             callback()
     fout.close()
