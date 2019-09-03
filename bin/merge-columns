@@ -11,7 +11,8 @@ try:
     import astrometry.util.fits
 except:
     import os
-    sys.path.insert(1, os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'lib', 'python')))
+    print("inserting {}".format(os.path.normpath(os.path.join(os.path.dirname(__file__), '..'))))
+    sys.path.insert(1, os.path.normpath(os.path.join(os.path.dirname(__file__), '..')))
 
 from astrometry.util.fits import fits_table
 
